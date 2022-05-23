@@ -1,5 +1,8 @@
 from config import load_config
 
+##############################
+# Maschinen Kontrollfunktionen
+##############################
 def np_referenzfahrt(steuerung, antriebsstrang):
     """setze für alle Achsen den NP"""
     achsen_verfahrwege = {
@@ -45,3 +48,17 @@ def mm_in_pps(steuerung, antrieb, achse, strecke):
     steigung = float(antrieb["steigung_mm_pro_u"])
     uebersetzung = float(antrieb["getriebe_uebersetzung"])
     return int((strecke*(360/vollschritt)*µstepRes)/(steigung*uebersetzung))
+
+########################
+# GUI Kontrollfunktionen
+########################
+def get_stringVar(axis):
+    print(axis.get())
+
+def get_intVar(speed):
+    print(speed.get())
+
+def gui_verfahre_achse(steuerung, antrieb, achse, weg):
+    print(achse.get())
+    print(weg.get())
+    print(mm_in_pps(steuerung, antrieb, achse, weg))
