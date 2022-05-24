@@ -52,13 +52,16 @@ def mm_in_pps(steuerung, antrieb, achse, strecke):
 ########################
 # GUI Kontrollfunktionen
 ########################
-def get_stringVar(axis):
-    print(axis.get())
+def manual_mode(steuerung, achse, richtung, speed):
+    """Achse verfährt solange wie der Knopf gedrückt ist"""
+    if richtung == "+":
+        steuerung.rotate(achse.get(), speed.get())
+    elif richtung == "-":
+        steuerung.rotate(achse.get(), speed.get()*-1)
 
-def get_intVar(speed):
-    print(speed.get())
 
-def gui_verfahre_achse(steuerung, antrieb, achse, weg):
-    print(achse.get())
-    print(weg.get())
-    print(mm_in_pps(steuerung, antrieb, achse, weg))
+def stop_manual_mode(steuerung, achse, text):
+    """Knopf loslassen um Achse zu stoppen"""
+    steuerung.stop(achse.get())
+    akt_pos = str(steuerung.getAxisParameter(1, achse.get()))
+    text.insert("end", akt_pos + "\n")
