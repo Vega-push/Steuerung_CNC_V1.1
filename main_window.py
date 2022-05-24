@@ -1,5 +1,6 @@
 import tkinter as tk
 import tkinter.scrolledtext
+from auto_window import erstelle_auto_window
 import controls
 
 def erstelle_main_window(master, steuerung, antriebsstrang):
@@ -10,14 +11,14 @@ def erstelle_main_window(master, steuerung, antriebsstrang):
         tf_infobox.delete(1.0, "end")
 
 
-    def erstelle_auto_window():
-        pass
+    def auto_window():
+        erstelle_auto_window(master, steuerung, antriebsstrang)
 
     ###################
     # Widgets erstellen
     ###################
     btn_ref = tk.Button(master, bd=3, font="Arial", text="Referenzfahrt", width=30, height=1, command=lambda: controls.np_referenzfahrt(steuerung, antriebsstrang, tf_infobox))
-    btn_auto = tk.Button(master, bd=3, font="Arial", text="Automatik Modus", width=30, height=1, command=erstelle_auto_window)
+    btn_auto = tk.Button(master, bd=3, font="Arial", text="Automatik Modus", width=30, height=1, command=auto_window)
     btn_clear_infobox = tk.Button(master, bd=3, font="Arial", text="Clear", width=20, height=1, command=clear_infobox)
     mainframe = tk.LabelFrame(master, text="Manuelle Steuerung", labelanchor="n")
     tf_infobox = tk.scrolledtext.ScrolledText(master, width=80, height=5, state="normal")
@@ -57,4 +58,4 @@ def erstelle_main_window(master, steuerung, antriebsstrang):
     btn_minus.grid(column=3, columnspan=3, row=2, padx=30, pady=15)
     ##############
     tf_infobox.grid(column=0, columnspan=2, row=2, padx=30, pady=15)
-    btn_clear_infobox.grid(column=0, columnspan=2, row=3, padx=30, pady=0)
+    btn_clear_infobox.grid(column=0, columnspan=2, row=3, padx=30, pady=5)
