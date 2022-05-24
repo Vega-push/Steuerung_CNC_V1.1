@@ -1,8 +1,6 @@
 import PyTrinamic
 import tkinter as tk
 import config
-import automatic
-import controls
 from main_window import erstelle_main_window
 from PyTrinamic.connections.ConnectionManager import ConnectionManager
 from PyTrinamic.modules.TMCM3110.TMCM_3110 import TMCM_3110
@@ -21,8 +19,6 @@ maschinendaten = config.load_config(tmcm_3110)
 root = tk.Tk()
 root.title("Steuerung CNC")
 erstelle_main_window(root, tmcm_3110, maschinendaten)
-
-
 
 tk.mainloop()
 

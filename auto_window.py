@@ -6,8 +6,8 @@ import controls
 def erstelle_auto_window(master, steuerung, antriebsstrang):
 
     def get_back():
+        """auto_window zerstoeren und main_window wieder anzeigen"""
         auto_window.destroy()
-        # main_window anzeigen und auf oberste Ebene heben
         master.state("normal")
         master.lift()
 
