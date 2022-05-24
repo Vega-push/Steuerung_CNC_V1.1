@@ -9,23 +9,18 @@ def erstelle_main_window(master, steuerung, antriebsstrang):
     def clear_infobox():
         tf_infobox.delete(1.0, "end")
 
-    def referenzfahrt():
-        achsen_verfahrwege = {
-        "y": int(antriebsstrang["y_max_weg"]),
-        "x": int(antriebsstrang["x_max_weg"]),
-        "z": int(antriebsstrang["z_max_weg"])
-        }
-        for value in achsen_verfahrwege:
-            tf_infobox.insert("end",str(achsen_verfahrwege[value]) + "\n")
-        #controls.np_referenzfahrt(steuerung,antriebsstrang)
+
+    def erstelle_auto_window():
+        pass
+
     ###################
     # Widgets erstellen
     ###################
-    btn_ref = tk.Button(master, bd=3, font="Arial", text="Referenzfahrt", width=30, height=2, command=referenzfahrt)#lambda: controls.np_referenzfahrt(steuerung, antriebsstrang))
-    btn_auto = tk.Button(master, bd=3, font="Arial", text="Auto-Mode", width=30, height=2)
+    btn_ref = tk.Button(master, bd=3, font="Arial", text="Referenzfahrt", width=30, height=1, command=lambda: controls.np_referenzfahrt(steuerung, antriebsstrang, tf_infobox))
+    btn_auto = tk.Button(master, bd=3, font="Arial", text="Automatik Modus", width=30, height=1, command=erstelle_auto_window)
     btn_clear_infobox = tk.Button(master, bd=3, font="Arial", text="Clear", width=20, height=1, command=clear_infobox)
     mainframe = tk.LabelFrame(master, text="Manuelle Steuerung", labelanchor="n")
-    tf_infobox = tk.scrolledtext.ScrolledText(master, width=100, height=5, state="normal")
+    tf_infobox = tk.scrolledtext.ScrolledText(master, width=80, height=5, state="normal")
     # Achsenauswahl erstellen
     axis = tk.IntVar(mainframe, 2)
     btn_x = tk.Radiobutton(mainframe, text='X-Achse', variable=axis, value=1, width=30, height=2)
@@ -41,16 +36,16 @@ def erstelle_main_window(master, steuerung, antriebsstrang):
     btn_minus = tk.Button(mainframe, bd=3, font="Arial", text=" - ", width=10, height=2)
     # gedrückt halten zum Fahren/loslassen zum Stoppen
     btn_plus.bind('<ButtonPress-1>', lambda event: controls.manual_mode(steuerung, axis, "+", geschwindigkeit))
-    btn_plus.bind('<ButtonRelease-1>', lambda event: controls.stop_manual_mode(steuerung, axis, tf_infobox))
+    btn_plus.bind('<ButtonRelease-1>', lambda event: controls.stop_manual_mode(steuerung, axis, tf_infobox, antriebsstrang))
     btn_minus.bind('<ButtonPress-1>', lambda event: controls.manual_mode(steuerung, axis, "-", geschwindigkeit))
-    btn_minus.bind('<ButtonRelease-1>', lambda event: controls.stop_manual_mode(steuerung, axis, tf_infobox))
+    btn_minus.bind('<ButtonRelease-1>', lambda event: controls.stop_manual_mode(steuerung, axis, tf_infobox, antriebsstrang))
 
     ##################
     # Widgets "packen"
     ##################
     btn_ref.grid(column=0, row=0, padx=30, pady=15)
     btn_auto.grid(column=1, row=0, padx=30, pady=15)
-    # Widgets in mainframe "packen"
+    #### frame ####
     mainframe.grid(column=0, columnspan=2, row=1, padx=30, pady=15)
     btn_x.grid(column=0, columnspan=2, row=0)
     btn_y.grid(column=2, columnspan=2, row=0)
@@ -60,5 +55,6 @@ def erstelle_main_window(master, steuerung, antriebsstrang):
     btn_10.grid(column=4, columnspan=2, row=1)
     btn_plus.grid(column=0, columnspan=3, row=2, padx=30, pady=15)
     btn_minus.grid(column=3, columnspan=3, row=2, padx=30, pady=15)
+    ##############
     tf_infobox.grid(column=0, columnspan=2, row=2, padx=30, pady=15)
     btn_clear_infobox.grid(column=0, columnspan=2, row=3, padx=30, pady=0)
