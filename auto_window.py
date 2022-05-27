@@ -6,11 +6,15 @@ import automatic
 
 def erstelle_auto_window(master, steuerung, antriebsstrang):
 
+    ###################
+    # Button Funktionen
+    ###################
     def get_back():
         """auto_window zerstoeren und main_window wieder anzeigen"""
         auto_window.destroy()
         master.state("normal")
         master.lift()
+
 
     def datei_speichern():
         """speichert den aktuellen Inhalt des Textfeldes in eine .txt Datei"""
@@ -27,6 +31,7 @@ def erstelle_auto_window(master, steuerung, antriebsstrang):
             tf_skriptbox.insert("1.0", datei.read())
             datei.close()
 
+
     def starte_programm():
         """gewünschte Datei laden, auf Fehler überprüfen, wenn i.O ausführen"""
         datei = tk.filedialog.askopenfile()
@@ -42,7 +47,10 @@ def erstelle_auto_window(master, steuerung, antriebsstrang):
 
     # verstecke das main_window
     master.state("withdraw")
+
+    #######################
     # auto_window erstellen
+    #######################
     auto_window = tk.Toplevel(master)
     auto_window.title("Automatischer Modus")
     # Widgets erstellen

@@ -95,9 +95,11 @@ def skript_ausfuehren(steuerung, maschinendaten, skript, step):
     """Skript ausführen, im Automatischen_ oder im Einzelschrittmodus"""
     if step:
         for zeile in skript:
+            MsgBox = tk.messagebox.askquestion("Schrittbetrieb","Fortfahren")
             befehlsauswahl(steuerung, maschinendaten, zeile)
+            while not(steuerung.positionReached(int(zeile[2]))):
+                pass
             if zeile[0] != "WAIT":
-                MsgBox = tk.messagebox.askquestion("Schrittbetrieb","Fortfahren")
                 if MsgBox == "yes":
                     pass
                 else:
