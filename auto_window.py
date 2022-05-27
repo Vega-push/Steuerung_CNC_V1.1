@@ -2,6 +2,7 @@ import tkinter as tk
 import tkinter.scrolledtext
 import tkinter.filedialog
 import controls
+import automatic
 
 def erstelle_auto_window(master, steuerung, antriebsstrang):
 
@@ -22,10 +23,31 @@ def erstelle_auto_window(master, steuerung, antriebsstrang):
 
     def datei_laden():
         """laden einer .txt Datei in das Textfeld"""
-        datei = tk.filedialog.askopenfile(master=auto_window, mode="r", filetypes=[("Text file", "*.txt")])
-        if datei:
+        #datei = tk.filedialog.askopenfile(master=auto_window, mode="r", filetypes=[("Text file", "*.txt")])
+        datei = tk.filedialog.askopenfile()
+        skript = automatic.skript_laden(datei.name)
+        if automatic.skript_ueberpruefen(skript):
             tf_skriptbox.insert("1.0", datei.read())
             datei.close()
+        else:
+            print("Fehler")
+
+        # if datei:
+        #     tf_skriptbox.insert("1.0", datei.read())
+        #     datei.close()
+
+    def starte_programm():
+        """gewünschte Datei laden, auf Fehler überprüfen, wenn i.O ausführen"""
+        datei = tk.filedialog.askopenfile()
+        skript = automatic.skript_laden(datei.name)
+        # Schrittmodus ausgewählt ja/nein
+        if automatic.skript_ueberpruefen(skript):
+            if single_flag.get():
+                automatic.skript_ausfuehren(steuerung, antriebsstrang, skript, True)
+            else:
+                automatic.skript_ausfuehren(steuerung, antriebsstrang, skript, False)
+        else:
+            print("Fehler")
 
     # verstecke das main_window
     master.state("withdraw")
@@ -33,12 +55,13 @@ def erstelle_auto_window(master, steuerung, antriebsstrang):
     auto_window = tk.Toplevel(master)
     auto_window.title("Automatischer Modus")
     # Widgets erstellen
-    btn_start = tk.Button(auto_window, bd=3, font="Arial", text="Start", width=15, height=1)
+    btn_start = tk.Button(auto_window, bd=3, font="Arial", text="Start", width=15, height=1, command=starte_programm)
     btn_stop = tk.Button(auto_window, bd=3, font="Arial", text="Stop", width=15, height=1)
     btn_save = tk.Button(auto_window, bd=3, font="Arial", text="Speichern", width=15, height=1, command=datei_speichern)
     btn_load = tk.Button(auto_window, bd=3, font="Arial", text="Laden", width=15, height=1, command=datei_laden)
     btn_reset = tk.Button(auto_window, bd=3, font="Arial", text="Reset", width=15, height=1)
-    check_single = tk.Checkbutton(auto_window, bd=3, font="Arial", text="Schrittmodus")
+    single_flag = tk.IntVar()
+    check_single = tk.Checkbutton(auto_window, bd=3, font="Arial", text="Schrittmodus", variable=single_flag)
     tf_skriptbox = tk.scrolledtext.ScrolledText(auto_window, width=80, height=35, state="normal")
     # Widgets "packen"
     tf_skriptbox.grid(column=0, columnspan=3, row=0, padx=10, pady=5)

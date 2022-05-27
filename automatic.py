@@ -1,8 +1,8 @@
 import csv
 import time
+import tkinter as tk
+from tkinter import messagebox
 from config import load_config
-
-# read data
 
 def aps_ausgeben(steuerung, achse):
     """Hilffunktion zum Erkennen von falsch gesetzten AP´s"""
@@ -10,12 +10,11 @@ def aps_ausgeben(steuerung, achse):
         print(f"{i} = {steuerung.getAxisParameter(i, achse)}")
 
 
-def skript_laden():
+def skript_laden(datei):
     """laden eines Skripts und Aufbereitung der Daten"""
-    file_name = input("Bitte Dateipfad eingeben: ")
     aktuelles_skript = []
     try:
-        with open(file_name) as f:
+        with open(datei) as f:
             data = csv.reader(f)
             # jede Zeile im Skript entspricht einer Liste (row)
             for row in data:
@@ -56,14 +55,12 @@ def skript_ueberpruefen(skript):
     befehlsliste = ["MVP", "WAIT", "ROR", "ROL", "MST", "SAP", "GAP", "SIO", "GIO", "LOOP"]
 
     # jeden Befehl jeder Zeile überprüfen, bei Fehler Rückgabe true und Zeilennr.
-    for i,zeile in enumerate(skript):
+    for zeile in skript:
         if zeile[0] in befehlsliste:
             pass
         else:
-            print(f"Fehler im Skript in Zeile {i+1}.")
-            print(zeile[0])
-            return True
-    return False
+            return False
+    return True
 
 
 def verfahrgrenze_ueberpruefen(steuerung, zeile, grenze):
@@ -100,7 +97,8 @@ def skript_ausfuehren(steuerung, maschinendaten, skript, step):
         for zeile in skript:
             befehlsauswahl(steuerung, maschinendaten, zeile)
             if zeile[0] != "WAIT":
-                if input("Fuer weiter j druecken. ").lower() == "j":
+                MsgBox = tk.messagebox.askquestion("Schrittbetrieb","Fortfahren")
+                if MsgBox == "yes":
                     pass
                 else:
                     break
