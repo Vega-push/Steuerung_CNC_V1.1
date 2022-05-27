@@ -37,13 +37,16 @@ def erstelle_auto_window(master, steuerung, antriebsstrang):
         datei = tk.filedialog.askopenfile()
         skript = automatic.skript_laden(datei.name)
         # Schrittmodus ausgewählt ja/nein
-        if automatic.skript_ueberpruefen(skript):
+        flag_skript, zeile = automatic.skript_ueberpruefen(skript)
+        if flag_skript:
             if single_flag.get():
                 automatic.skript_ausfuehren(steuerung, antriebsstrang, skript, True)
             else:
                 automatic.skript_ausfuehren(steuerung, antriebsstrang, skript, False)
+            tf_skriptbox.delete()
+            tf_skriptbox.insert("end", "Skript erfolgreich beendet!!\n")
         else:
-            print("Fehler")
+            tf_skriptbox.insert("end", f"Fehler im Skript in Zeile {zeile}!\n")
 
     # verstecke das main_window
     master.state("withdraw")

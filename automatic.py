@@ -54,13 +54,13 @@ def skript_ueberpruefen(skript):
     # konstante Variablen abspeichern
     befehlsliste = ["MVP", "WAIT", "ROR", "ROL", "MST", "SAP", "GAP", "SIO", "GIO", "LOOP"]
 
-    # jeden Befehl jeder Zeile überprüfen, bei Fehler Rückgabe true und Zeilennr.
-    for zeile in skript:
+    # jeden Befehl jeder Zeile überprüfen, bei Fehler Rückgabe False und Zeilennr.
+    for i,zeile in enumerate(skript):
         if zeile[0] in befehlsliste:
             pass
         else:
-            return False
-    return True
+            return False, i+1
+    return True, 0
 
 
 def verfahrgrenze_ueberpruefen(steuerung, zeile, grenze):
