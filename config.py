@@ -24,7 +24,7 @@ def get_ind_aps(config):
 
 def load_config(steuerung):
     """laden, setzen der Achsenparameter und der Daten des Antriebsstranges"""
-    ind_aps = get_ind_aps(parser)
+    ind_aps = get_ind_aps(parser) # erzeugen einer index Liste
     antriebsstrang = {}
 
     # laden und setzen der Achsparameter

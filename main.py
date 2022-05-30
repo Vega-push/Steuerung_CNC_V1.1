@@ -4,7 +4,6 @@ import config
 from main_window import erstelle_main_window
 from PyTrinamic.connections.ConnectionManager import ConnectionManager
 from PyTrinamic.modules.TMCM3110.TMCM_3110 import TMCM_3110
-import time
 
 # Verbindung herstellen und Steuerungsobjekt anlegen
 PyTrinamic.showInfo()
@@ -15,6 +14,8 @@ tmcm_3110 = TMCM_3110(my_interface)
 # Config laden und maschine mit Antriebsstrangdaten erzeugen
 maschinendaten = config.load_config(tmcm_3110)
 
+# analog_input = tmcm_3110.analogInput(0)
+# print(analog_input)
 # GUI erstellen
 root = tk.Tk()
 root.title("Steuerung CNC")

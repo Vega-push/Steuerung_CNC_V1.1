@@ -43,7 +43,7 @@ def erstelle_auto_window(master, steuerung, antriebsstrang):
                 automatic.skript_ausfuehren(steuerung, antriebsstrang, skript, True)
             else:
                 automatic.skript_ausfuehren(steuerung, antriebsstrang, skript, False)
-            tf_skriptbox.delete()
+            tf_skriptbox.delete("1.0","end")
             tf_skriptbox.insert("end", "Skript erfolgreich beendet!!\n")
         else:
             tf_skriptbox.insert("end", f"Fehler im Skript in Zeile {zeile}!\n")

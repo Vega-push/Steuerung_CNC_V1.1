@@ -16,7 +16,7 @@ def np_referenzfahrt(steuerung, antriebsstrang, text):
         text.insert("end", f"Fahre {item.upper()}-Achse in rechten Referenzschalter!\n")
         text.update()
         text.yview("end")
-        while not(steuerung.getAxisParameter(10, i)):
+        while not(steuerung.getAxisParameter(10, i)): # 10 =right limit switch state
             pass
         steuerung.stop(i)
         # fahre max Achsenverfahrweg vom Schalter zurueck
@@ -37,6 +37,7 @@ def np_referenzfahrt(steuerung, antriebsstrang, text):
     text.insert("end","Nullpunkte erfolgreich gesetzt!")
     text.update()
     text.yview("end")
+
 
 def pps_in_mm(steuerung, antrieb, achse, pulse):
     """Rotatorische Bewegung (pps) in eine translatorische Bewegung (mm)."""
