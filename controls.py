@@ -42,19 +42,19 @@ def np_referenzfahrt(steuerung, antriebsstrang, text):
 def pps_in_mm(steuerung, antrieb, achse, pulse):
     """Rotatorische Bewegung (pps) in eine translatorische Bewegung (mm)."""
     vollschritt = float(antrieb["vollschritt"])
-    µstepRes = 2**steuerung.getAxisParameter(140, achse)
+    mic_step_res = 2**steuerung.getAxisParameter(140, achse)
     steigung = float(antrieb["steigung_mm_pro_u"])
     uebersetzung = float(antrieb["getriebe_uebersetzung"])
-    return float("{:.3f}".format((pulse/((360/vollschritt)*µstepRes))*steigung*uebersetzung))
+    return round(((pulse/((360/vollschritt)*mic_step_res))*steigung*uebersetzung),3)
 
 
 def mm_in_pps(steuerung, antrieb, achse, strecke):
     """Translatorische Bewegung (mm) in rotatorische Bewegung umrechnen(pps)"""
     vollschritt = float(antrieb["vollschritt"])
-    µstepRes = 2**steuerung.getAxisParameter(140, achse)
+    mic_step_res = 2**steuerung.getAxisParameter(140, achse)
     steigung = float(antrieb["steigung_mm_pro_u"])
     uebersetzung = float(antrieb["getriebe_uebersetzung"])
-    return int((strecke*(360/vollschritt)*µstepRes)/(steigung*uebersetzung))
+    return int((strecke*(360/vollschritt)*mic_step_res)/(steigung*uebersetzung))
 
 ########################
 # GUI Kontrollfunktionen
@@ -76,7 +76,7 @@ def stop_manual_mode(steuerung, achse, text, antriebsstrang):
     }
     steuerung.stop(achse.get())
     # aktuelle Position und max. Weg je nach Achse im Textfeld anzeigen
-    akt_pos = str(steuerung.getAxisParameter(1, achse.get()))
+    akt_pos = steuerung.getAxisParameter(1, achse.get())
     text.delete(1.0, "end")
-    text.insert("end", "aktuelle Position  " + akt_pos + "\n" )
+    text.insert("end", f"aktuelle Position: {akt_pos}pps = {pps_in_mm(steuerung, antriebsstrang, achse.get(), akt_pos)}mm\n" )
     text.insert("end", "maximaler Weg von 0 - " + achsen_verfahrwege[str(achse.get())])
