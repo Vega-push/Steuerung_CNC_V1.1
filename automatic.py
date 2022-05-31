@@ -1,6 +1,7 @@
 import csv
 import time
 import tkinter as tk
+import getanaloginput as IO
 from tkinter import messagebox
 from config import load_config
 
@@ -108,6 +109,7 @@ def skript_ausfuehren(steuerung, maschinendaten, skript, step):
                 pass
     else:
         for zeile in skript:
+            print(IO.messwert_auslesen())
             befehlsauswahl(steuerung, maschinendaten, zeile)
     print("Skript beendet!")
 
