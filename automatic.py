@@ -9,7 +9,7 @@ def aps_ausgeben(steuerung, achse):
     for i in range(255):
         print(f"{i} = {steuerung.getAxisParameter(i, achse)}")
 
-
+# TODO
 def skript_laden(datei):
     """laden eines Skripts und Aufbereitung der Daten"""
     aktuelles_skript = []
@@ -32,7 +32,7 @@ def skript_laden(datei):
     # TODO : LOOP Eingabe
     return aktuelles_skript
 
-
+# TODO
 def skript_speichern(skript):
     """speichern des Skripts in ausgewähltem Dateipfad"""
     dateiname = input("Bitte Speicherpfad + Name eingeben. ")
@@ -73,7 +73,7 @@ def verfahrgrenze_ueberpruefen(steuerung, zeile, grenze):
         if weg >= 0 and weg <= grenze:
             return True
         else:
-            print("Absolutwert zu groß!!")
+            tk.messagebox.showerror(message="Absolutwert zu groß!")
             return False
     elif typ =="REL":
         # akt. pos abfragen und max. Verfahrweg in + und - Richtung ausrechnen
@@ -83,7 +83,7 @@ def verfahrgrenze_ueberpruefen(steuerung, zeile, grenze):
         if weg < max_pos_weg and weg > max_neg_weg:
             return True
         else:
-            print("Inkrementaler Verfahrweg zu groß!!")
+            tk.messagebox.showerror(message="Inkrementaler Verfahrweg zu groß!")
             return False
     elif typ == "COORD":
         # TODO

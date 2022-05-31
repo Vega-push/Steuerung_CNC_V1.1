@@ -78,5 +78,8 @@ def stop_manual_mode(steuerung, achse, text, antriebsstrang):
     # aktuelle Position und max. Weg je nach Achse im Textfeld anzeigen
     akt_pos = steuerung.getAxisParameter(1, achse.get())
     text.delete(1.0, "end")
+    # Ueberlaufproblem mit Achsparameter 1 aktuelle Position
+    if akt_pos > 2147483647:
+        akt_pos = 0
     text.insert("end", f"aktuelle Position: {akt_pos}pps = {pps_in_mm(steuerung, antriebsstrang, achse.get(), akt_pos)}mm\n" )
     text.insert("end", "maximaler Weg von 0 - " + achsen_verfahrwege[str(achse.get())])
