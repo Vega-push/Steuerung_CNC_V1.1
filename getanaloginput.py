@@ -12,10 +12,9 @@ def messwert_auslesen():
             device.open()
             value = device.getSingleEndedInputs()[0].read()
 
-
             # Finalize device usage, this free's up the device, so it can be used
             # again, including other applications.
             device.close()
+            return value
     except Exception as e:
         print(e)
-    return value

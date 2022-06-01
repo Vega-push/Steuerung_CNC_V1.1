@@ -4,6 +4,7 @@ import tkinter as tk
 import getanaloginput as IO
 from tkinter import messagebox
 from config import load_config
+from controls import messdaten_schreiben
 
 def aps_ausgeben(steuerung, achse):
     """Hilffunktion zum Erkennen von falsch gesetzten AP´s"""
@@ -109,8 +110,8 @@ def skript_ausfuehren(steuerung, maschinendaten, skript, step):
                 pass
     else:
         for zeile in skript:
-            print(IO.messwert_auslesen())
             befehlsauswahl(steuerung, maschinendaten, zeile)
+    messdaten_schreiben()
     print("Skript beendet!")
 
 
@@ -148,6 +149,9 @@ def befehlsauswahl(steuerung, maschinendaten, zeile):
             verfahrweg = int(zeile[3])
             while not(steuerung.positionReached(achse)):
                 pass
+            # wenn Position erreicht, Sensor auslesen, Wartezeit für Sensor
+            time.sleep(0.1)
+            print(IO.messwert_auslesen())
         case "ROR":
             achse = int(zeile[1])
             velocity = int(zeile[2])
