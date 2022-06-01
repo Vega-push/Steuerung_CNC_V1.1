@@ -23,6 +23,7 @@ def erstelle_auto_window(master, steuerung, antriebsstrang):
     def datei_speichern():
         """speichert den aktuellen Inhalt des Textfeldes in eine .txt Datei"""
         textfeld_inhalt = tf_skriptbox.get("1.0","end")
+        textfeld_inhalt = textfeld_inhalt.strip()
         datei = tk.filedialog.asksaveasfile(master=auto_window, mode="w", defaultextension="txt", filetypes=[("Text file", "*.txt")])
         datei.write(textfeld_inhalt)
         datei.close()

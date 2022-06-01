@@ -1,5 +1,7 @@
 from config import load_config
 import csv
+import tkinter as tk
+from tkinter import simpledialog
 
 ##############################
 # Maschinen Kontrollfunktionen
@@ -91,8 +93,8 @@ def messdaten_schreiben(data):
         Parameter: Index/ Zeit/ Pos x,y/ Value
     """
     header = ["Index", "Zeit in s", "Pos x in mm", "Pos y in mm", "Value in V"]
-
-    with open("Messdaten.csv", "w", encoding="UTF8", newline="") as f:
+    answer = simpledialog.askstring("Input", "Bitte Namen der Messdatei eingeben.")
+    with open(answer, "w", encoding="UTF8", newline="") as f:
         writer = csv.writer(f)
 
         writer.writerow(header)

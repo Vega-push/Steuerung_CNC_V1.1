@@ -34,23 +34,7 @@ def skript_laden(datei):
     except FileNotFoundError:
         print("Kein Skript geladen! Ausgewaehlte Datei existiert nicht.")
         exit()
-    # TODO : LOOP Eingabe
     return aktuelles_skript
-
-# TODO
-def skript_speichern(skript):
-    """speichern des Skripts in ausgewähltem Dateipfad"""
-    dateiname = input("Bitte Speicherpfad + Name eingeben. ")
-    datei = open(dateiname,"w") # r = read, w = write, a = append, r+ = r und w
-    for liste in skript:
-        for i,string in enumerate(liste):
-            # nach letztem "string" einer Zeile kein Komma und kein Leerzeichen
-            if i+1 < len(liste):
-                datei.write(string + "," + " ")
-            else:
-                datei.write(string)
-        datei.write("\n")
-    datei.close()
 
 
 def skript_ueberpruefen(skript):
