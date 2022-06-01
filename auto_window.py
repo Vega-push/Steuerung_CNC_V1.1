@@ -1,8 +1,12 @@
 import tkinter as tk
 import tkinter.scrolledtext
 import tkinter.filedialog
+from tkinter import messagebox
+import csv
 import controls
 import automatic
+
+skript = []
 
 def erstelle_auto_window(master, steuerung, antriebsstrang):
 
@@ -26,16 +30,16 @@ def erstelle_auto_window(master, steuerung, antriebsstrang):
 
     def datei_laden():
         """laden einer .txt Datei in das Textfeld"""
+        tf_skriptbox.delete("1.0", "end")
         datei = tk.filedialog.askopenfile(master=auto_window, mode="r", filetypes=[("Text file", "*.txt")])
         if datei:
             tf_skriptbox.insert("1.0", datei.read())
             datei.close()
-
+        global skript
+        skript = automatic.skript_laden(datei.name)
 
     def starte_programm():
         """gewünschte Datei laden, auf Fehler überprüfen, wenn i.O ausführen"""
-        datei = tk.filedialog.askopenfile()
-        skript = automatic.skript_laden(datei.name)
         # Schrittmodus ausgewählt ja/nein
         flag_skript, zeile = automatic.skript_ueberpruefen(skript)
         if flag_skript:
@@ -43,10 +47,9 @@ def erstelle_auto_window(master, steuerung, antriebsstrang):
                 automatic.skript_ausfuehren(steuerung, antriebsstrang, skript, True)
             else:
                 automatic.skript_ausfuehren(steuerung, antriebsstrang, skript, False)
-            tf_skriptbox.delete("1.0","end")
-            tf_skriptbox.insert("end", "Skript erfolgreich beendet!!\n")
+            tk.messagebox.showinfo(message="Skript erfolgreich beendet.")
         else:
-            tf_skriptbox.insert("end", f"Fehler im Skript in Zeile {zeile}!\n")
+            tk.messagebox.showinfo(message=f"Fehler im Skript in Zeile {zeile}!\n")
 
 
     def befehlsliste_anzeigen():

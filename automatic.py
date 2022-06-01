@@ -14,7 +14,7 @@ def aps_ausgeben(steuerung, achse):
     for i in range(255):
         print(f"{i} = {steuerung.getAxisParameter(i, achse)}")
 
-# TODO
+
 def skript_laden(datei):
     """laden eines Skripts und Aufbereitung der Daten"""
     aktuelles_skript = []
@@ -115,7 +115,6 @@ def skript_ausfuehren(steuerung, maschinendaten, skript, step):
         for zeile in skript:
             befehlsauswahl(steuerung, maschinendaten, zeile)
     messdaten_schreiben(messdaten)
-    print("Skript beendet!")
 
 
 def befehlsauswahl(steuerung, maschinendaten, zeile):
@@ -155,19 +154,6 @@ def befehlsauswahl(steuerung, maschinendaten, zeile):
             # wenn Position erreicht, Sensor auslesen, Wartezeit für Sensor
             time.sleep(0.1)
             messdatenliste_erzeugen(steuerung, maschinendaten)
-            # beim ersten Durchlauf startzeit setzen
-            # global counter
-            # global startzeit
-            # if counter == 1:
-            #     startzeit = time.time()
-            # messwerte = []
-            # messwerte.append(counter)
-            # messwerte.append(round(time.time()-startzeit,3))
-            # messwerte.append(steuerung.getAxisParameter(1,0))
-            # messwerte.append(steuerung.getAxisParameter(1,1))
-            # messwerte.append(round(IO.messwert_auslesen(),3))
-            # messdaten.append(messwerte)
-            # counter += 1
         case "ROR":
             achse = int(zeile[1])
             velocity = int(zeile[2])
