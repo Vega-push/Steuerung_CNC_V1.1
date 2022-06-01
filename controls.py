@@ -86,16 +86,14 @@ def stop_manual_mode(steuerung, achse, text, antriebsstrang):
     text.insert("end", "maximaler Weg von 0 - " + achsen_verfahrwege[str(achse.get())])
 
 
-def messdaten_schreiben():
+def messdaten_schreiben(data):
     """ Schreiben der Messdaten in eine .csv Datei
         Parameter: Index/ Zeit/ Pos x,y/ Value
     """
-    header = ["Index", "Zeit", "Pos x", "Pos y", "Value"]
-    data = [[1, 0.1, 20, 20, 0.13], [2, 0.2, 20, 20, 0.15], [3, 0.25, 20, 20, 0.2]]
+    header = ["Index", "Zeit in s", "Pos x in mm", "Pos y in mm", "Value in V"]
 
     with open("Messdaten.csv", "w", encoding="UTF8", newline="") as f:
         writer = csv.writer(f)
 
         writer.writerow(header)
-        for item in data:
-            writer.writerow(data)
+        writer.writerows(data)

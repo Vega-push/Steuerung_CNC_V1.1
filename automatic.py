@@ -4,7 +4,10 @@ import tkinter as tk
 import getanaloginput as IO
 from tkinter import messagebox
 from config import load_config
-from controls import messdaten_schreiben
+from controls import messdaten_schreiben, pps_in_mm
+
+messdaten = []
+counter = 1
 
 def aps_ausgeben(steuerung, achse):
     """Hilffunktion zum Erkennen von falsch gesetzten AP´s"""
@@ -111,7 +114,7 @@ def skript_ausfuehren(steuerung, maschinendaten, skript, step):
     else:
         for zeile in skript:
             befehlsauswahl(steuerung, maschinendaten, zeile)
-    messdaten_schreiben()
+    messdaten_schreiben(messdaten)
     print("Skript beendet!")
 
 
@@ -151,7 +154,20 @@ def befehlsauswahl(steuerung, maschinendaten, zeile):
                 pass
             # wenn Position erreicht, Sensor auslesen, Wartezeit für Sensor
             time.sleep(0.1)
-            print(IO.messwert_auslesen())
+            messdatenliste_erzeugen(steuerung, maschinendaten)
+            # beim ersten Durchlauf startzeit setzen
+            # global counter
+            # global startzeit
+            # if counter == 1:
+            #     startzeit = time.time()
+            # messwerte = []
+            # messwerte.append(counter)
+            # messwerte.append(round(time.time()-startzeit,3))
+            # messwerte.append(steuerung.getAxisParameter(1,0))
+            # messwerte.append(steuerung.getAxisParameter(1,1))
+            # messwerte.append(round(IO.messwert_auslesen(),3))
+            # messdaten.append(messwerte)
+            # counter += 1
         case "ROR":
             achse = int(zeile[1])
             velocity = int(zeile[2])
@@ -204,3 +220,18 @@ def befehlsauswahl(steuerung, maschinendaten, zeile):
             print("Setze digitalen Output!")
         case "GIO":
             print("Lese digitalen Input!")
+
+
+def messdatenliste_erzeugen(steuerung, maschinendaten):
+    global counter
+    global startzeit
+    if counter == 1:
+        startzeit = time.time()
+    messwerte = []
+    messwerte.append(counter)
+    messwerte.append(round(time.time()-startzeit,3))
+    messwerte.append(pps_in_mm(steuerung, maschinendaten, 0, steuerung.getAxisParameter(1, 0)))
+    messwerte.append(pps_in_mm(steuerung, maschinendaten, 1, steuerung.getAxisParameter(1, 1)))
+    messwerte.append(round(IO.messwert_auslesen(),3))
+    messdaten.append(messwerte)
+    counter += 1
