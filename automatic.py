@@ -8,6 +8,7 @@ from controls import messdaten_schreiben, pps_in_mm
 
 messdaten = []
 counter = 1
+startzeit = 0
 
 def aps_ausgeben(steuerung, achse):
     """Hilffunktion zum Erkennen von falsch gesetzten AP´s"""
@@ -197,6 +198,8 @@ def messdatenliste_erzeugen(steuerung, maschinendaten):
     global startzeit
     if counter == 1:
         startzeit = time.time()
+    else:
+        pass
     messwerte = []
     messwerte.append(counter)
     messwerte.append(round(time.time()-startzeit,3))
