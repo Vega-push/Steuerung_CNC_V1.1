@@ -205,6 +205,7 @@ def messdatenliste_erzeugen(steuerung, maschinendaten):
     messwerte.append(round(time.time()-startzeit,3))
     messwerte.append(pps_in_mm(steuerung, maschinendaten, 0, steuerung.getAxisParameter(1, 0)))
     messwerte.append(pps_in_mm(steuerung, maschinendaten, 1, steuerung.getAxisParameter(1, 1)))
+    time.sleep(0.1)
     messwerte.append(round(IO.messwert_auslesen(),3))
     messdaten.append(messwerte)
     counter += 1
