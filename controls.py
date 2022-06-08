@@ -85,14 +85,14 @@ def stop_manual_mode(steuerung, achse, text, antriebsstrang):
     if akt_pos > 2147483647:
         akt_pos = 0
     text.insert("end", f"aktuelle Position: {akt_pos}pps = {pps_in_mm(steuerung, antriebsstrang, achse.get(), akt_pos)}mm\n" )
-    text.insert("end", "maximaler Weg von 0 - " + achsen_verfahrwege[str(achse.get())])
+    text.insert("end", "maximaler Weg von 0 - " + achsen_verfahrwege[str(achse.get())] + "pps")
 
 
 def messdaten_schreiben(data):
     """ Schreiben der Messdaten in eine .csv Datei
         Parameter: Index/ Zeit/ Pos x,y/ Value
     """
-    header = ["Index", "Zeit in s", "Pos x in mm", "Pos y in mm", "Value in V"]
+    header = ["Index", "Zeit in s", "Pos x in mm", "Pos y in mm", "Value in mV"]
     answer = simpledialog.askstring("Input", "Bitte Namen der Messdatei eingeben.")
     with open(answer, "w", encoding="UTF8", newline="") as f:
         writer = csv.writer(f)

@@ -11,6 +11,7 @@ def messwert_auslesen():
             # Open device, nothing can be done without doing this.
             device.open()
             value = device.getSingleEndedInputs()[0].read()
+            print(value)
 
             # Finalize device usage, this free's up the device, so it can be used
             # again, including other applications.
