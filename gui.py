@@ -3,13 +3,10 @@ import tkinter.scrolledtext
 from auto_window import erstelle_auto_window
 import controls
 
+
 def erstelle_main_window(master, steuerung, antriebsstrang):
-    ####################
-    # Funktionen Buttons
-    ####################
     def clear_infobox():
         tf_infobox.delete(1.0, "end")
-
 
     def auto_window():
         erstelle_auto_window(master, steuerung, antriebsstrang)
@@ -17,7 +14,8 @@ def erstelle_main_window(master, steuerung, antriebsstrang):
     ###################
     # Widgets erstellen
     ###################
-    btn_ref = tk.Button(master, bd=3, font="Arial", text="Referenzfahrt", width=30, height=1, command=lambda: controls.np_referenzfahrt(steuerung, antriebsstrang, tf_infobox))
+    btn_ref = tk.Button(master, bd=3, font="Arial", text="Referenzfahrt", width=30, height=1,
+                        command=lambda: controls.np_referenzfahrt(steuerung, antriebsstrang, tf_infobox))
     btn_auto = tk.Button(master, bd=3, font="Arial", text="Automatik Modus", width=30, height=1, command=auto_window)
     btn_clear_infobox = tk.Button(master, bd=3, font="Arial", text="Clear", width=20, height=1, command=clear_infobox)
     mainframe = tk.LabelFrame(master, text="Manuelle Steuerung", labelanchor="n")
@@ -37,16 +35,18 @@ def erstelle_main_window(master, steuerung, antriebsstrang):
     btn_minus = tk.Button(mainframe, bd=3, font="Arial", text=" - ", width=10, height=2)
     # gedrückt halten zum Fahren/loslassen zum Stoppen
     btn_plus.bind('<ButtonPress-1>', lambda event: controls.manual_mode(steuerung, axis, "+", geschwindigkeit))
-    btn_plus.bind('<ButtonRelease-1>', lambda event: controls.stop_manual_mode(steuerung, axis, tf_infobox, antriebsstrang))
+    btn_plus.bind('<ButtonRelease-1>', lambda event: controls.stop_manual_mode(steuerung, axis,
+                                                                               tf_infobox, antriebsstrang))
     btn_minus.bind('<ButtonPress-1>', lambda event: controls.manual_mode(steuerung, axis, "-", geschwindigkeit))
-    btn_minus.bind('<ButtonRelease-1>', lambda event: controls.stop_manual_mode(steuerung, axis, tf_infobox, antriebsstrang))
+    btn_minus.bind('<ButtonRelease-1>', lambda event: controls.stop_manual_mode(steuerung, axis,
+                                                                                tf_infobox, antriebsstrang))
 
     ##################
     # Widgets "packen"
     ##################
     btn_ref.grid(column=0, row=0, padx=30, pady=15)
     btn_auto.grid(column=1, row=0, padx=30, pady=15)
-    #### frame ####
+    # frame ####
     mainframe.grid(column=0, columnspan=2, row=1, padx=30, pady=15)
     btn_x.grid(column=0, columnspan=2, row=0)
     btn_y.grid(column=2, columnspan=2, row=0)

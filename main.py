@@ -1,7 +1,7 @@
 import PyTrinamic
 import tkinter as tk
 import config
-from main_window import erstelle_main_window
+from gui import erstelle_main_window
 from PyTrinamic.connections.ConnectionManager import ConnectionManager
 from PyTrinamic.modules.TMCM3110.TMCM_3110 import TMCM_3110
 from handle_data import Handle_Data
