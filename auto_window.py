@@ -2,11 +2,10 @@ import tkinter as tk
 import tkinter.scrolledtext
 import tkinter.filedialog
 from tkinter import messagebox
-import csv
-import controls
 import automatic
 
 skript = []
+
 
 def erstelle_auto_window(master, steuerung, antriebsstrang):
 
@@ -19,20 +18,18 @@ def erstelle_auto_window(master, steuerung, antriebsstrang):
         master.state("normal")
         master.lift()
 
-
     def datei_speichern():
         """speichert den aktuellen Inhalt des Textfeldes in eine .txt Datei"""
         textfeld_inhalt = tf_skriptbox.get("1.0","end")
         textfeld_inhalt = textfeld_inhalt.strip()
-        datei = tk.filedialog.asksaveasfile(master=auto_window, mode="w", defaultextension="txt", filetypes=[("Text file", "*.txt")])
+        datei = tk.filedialog.asksaveasfile(mode="w", defaultextension="txt", filetypes=[("Text file", "*.txt")])
         datei.write(textfeld_inhalt)
         datei.close()
-
 
     def datei_laden():
         """laden einer .txt Datei in das Textfeld"""
         tf_skriptbox.delete("1.0", "end")
-        datei = tk.filedialog.askopenfile(master=auto_window, mode="r", filetypes=[("Text file", "*.txt")])
+        datei = tk.filedialog.askopenfile(mode="r", filetypes=[("Text file", "*.txt")])
         if datei:
             tf_skriptbox.insert("1.0", datei.read())
             datei.close()
@@ -52,7 +49,6 @@ def erstelle_auto_window(master, steuerung, antriebsstrang):
         else:
             tk.messagebox.showinfo(message=f"Fehler im Skript in Zeile {zeile}!\n")
 
-
     def befehlsliste_anzeigen():
         """Anzeigen von möglichen Befehlen mit Beispielen für das Skript"""
         help_window = tk.Toplevel(auto_window)
@@ -67,7 +63,6 @@ def erstelle_auto_window(master, steuerung, antriebsstrang):
             exit()
         tf_helpbox.config(state="disabled")
 
-
     # verstecke das main_window
     master.state("withdraw")
 
@@ -80,7 +75,8 @@ def erstelle_auto_window(master, steuerung, antriebsstrang):
     btn_start = tk.Button(auto_window, bd=3, font="Arial", text="Start", width=15, height=1, command=starte_programm)
     btn_save = tk.Button(auto_window, bd=3, font="Arial", text="Speichern", width=15, height=1, command=datei_speichern)
     btn_load = tk.Button(auto_window, bd=3, font="Arial", text="Laden", width=15, height=1, command=datei_laden)
-    btn_help = tk.Button(auto_window, bd=3, font="Arial", text="Hilfe", width=15, height=1, command=befehlsliste_anzeigen)
+    btn_help = tk.Button(auto_window, bd=3, font="Arial", text="Hilfe", width=15, height=1,
+                         command=befehlsliste_anzeigen)
     single_flag = tk.IntVar()
     check_single = tk.Checkbutton(auto_window, bd=3, font="Arial", text="Schrittmodus", variable=single_flag)
     tf_skriptbox = tk.scrolledtext.ScrolledText(auto_window, width=80, height=35, state="normal")

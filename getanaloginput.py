@@ -3,11 +3,12 @@ from cebomsr import LibraryInterface, DeviceType
 # Search for devices ...
 devices = LibraryInterface.enumerate(DeviceType.CeboLC)
 
+
 def messwert_auslesen():
     try:
 
         # If at least one has been found, use the first one ...
-        if (len(devices) > 0):
+        if len(devices) > 0:
             device = devices[0]
 
             # Open device, nothing can be done without doing this.
